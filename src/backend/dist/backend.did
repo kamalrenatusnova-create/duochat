@@ -1,0 +1,177 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   avatar: opt Attachment;
+   displayName: text;
+ };
+type UserId = principal;
+type Timestamp = int;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type MessagePage = 
+ record {
+   messages: vec Message;
+   nextCursor: opt MessageId;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   attachments: vec Attachment;
+   conversationId: ConversationId;
+   createdAt: Timestamp;
+   id: MessageId;
+   sender: UserId;
+   "text": text;
+ };
+type ExternalBlob = blob;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type ConversationSummary = 
+ record {
+   createdAt: Timestamp;
+   id: ConversationId;
+   lastMessageAt: opt Timestamp;
+   participants: vec UserId;
+   unreadCount: nat;
+ };
+type ConversationId = nat;
+type ConnectionCode = text;
+type ChatError = 
+ variant {
+   alreadyConnected;
+   alreadyUsedCode;
+   cannotConnectToSelf;
+   conversationNotFound;
+   emptyMessage;
+   expiredCode;
+   invalidCode;
+   notParticipant;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type Attachment = 
+ record {
+   "blob": ExternalBlob;
+   mimeType: text;
+   name: text;
+   size: nat;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Create a new short, shareable connection code for the caller.
+  createConnectionCode: () -> (ConnectionCode);
+  execute: (qJson: text) -> (Result) query;
+  /// Static Markdown documentation of the backend's public API.
+  getApiDoc: () -> (text) query;
+  /// Read the caller's own profile, if one has been saved.
+  getCallerProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch a page of messages, newest-first, using an optional cursor.
+  getMessages: (conversationId: ConversationId, cursor: opt MessageId, limit:
+   nat) -> (variant {
+              err: ChatError;
+              ok: MessagePage;
+            }) query;
+  /// Read another user's public profile.
+  getUserProfile: (user: UserId) -> (opt UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Leave/end a conversation for the caller.
+  leaveConversation: (conversationId: ConversationId) ->
+   (variant {
+      err: ChatError;
+      ok;
+    });
+  /// List the caller's active connections with unread counts.
+  listConversations: () -> (vec ConversationSummary) query;
+  /// Mark all messages in a conversation as read for the caller.
+  markConversationRead: (conversationId: ConversationId) ->
+   (variant {
+      err: ChatError;
+      ok;
+    });
+  /// Redeem a friend's connection code, opening a shared conversation.
+  redeemConnectionCode: (code: ConnectionCode) ->
+   (variant {
+      err: ChatError;
+      ok: ConversationId;
+    });
+  /// Create or replace the caller's profile (display name and avatar).
+  saveCallerProfile: (profile: UserProfile) -> ();
+  schema: () -> (text) query;
+  /// Send a text and/or attachment message to a conversation.
+  sendMessage: (conversationId: ConversationId, "text": text, attachments:
+   vec Attachment) -> (variant {
+                         err: ChatError;
+                         ok: Message;
+                       });
+}

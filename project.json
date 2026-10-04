@@ -1,0 +1,21 @@
+{
+  "overview": "A private two-person chat app where friends pair with a connection code and share text, photos, audio, music, and files.",
+  "features": [
+    "Sign in and set up a display name and avatar",
+    "Create a shareable connection code to pair with a friend",
+    "Join a friend's conversation by entering their code",
+    "Send and receive text messages in a shared conversation",
+    "Share photos, audio, music, and documents with inline previews and players",
+    "Auto-refreshing conversation with unread indicators",
+    "Polished light and dark theme with responsive layout"
+  ],
+  "category": "chat",
+  "tags": [
+    "chat",
+    "messaging",
+    "file-sharing",
+    "private",
+    "social"
+  ],
+  "last_updated": "2026-10-02T05:29:36.211Z"
+}

@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Fraunces", serif;
+    --font-body: "DM Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.875rem;
+
+    /* Warm cream canvas, warm ink text */
+    --background: 0.965 0.014 78;
+    --foreground: 0.22 0.028 45;
+    --card: 0.99 0.008 80;
+    --card-foreground: 0.22 0.028 45;
+    --popover: 0.995 0.006 80;
+    --popover-foreground: 0.22 0.028 45;
+
+    /* Ember coral — the personal, human accent */
+    --primary: 0.63 0.155 33;
+    --primary-foreground: 0.99 0.008 60;
+
+    --secondary: 0.925 0.02 78;
+    --secondary-foreground: 0.3 0.03 50;
+    --muted: 0.93 0.018 78;
+    --muted-foreground: 0.5 0.024 55;
+
+    /* Jade — connection / presence accent */
+    --accent: 0.58 0.11 168;
+    --accent-foreground: 0.99 0.008 168;
+
+    --destructive: 0.55 0.2 27;
+    --destructive-foreground: 0.99 0.008 27;
+
+    --success: 0.58 0.13 158;
+    --warning: 0.72 0.14 78;
+
+    --border: 0.885 0.022 76;
+    --input: 0.885 0.022 76;
+    --ring: 0.63 0.155 33;
+
+    --chart-1: 0.63 0.155 33;
+    --chart-2: 0.58 0.11 168;
+    --chart-3: 0.55 0.09 250;
+    --chart-4: 0.72 0.14 78;
+    --chart-5: 0.6 0.13 320;
+
+    --sidebar: 0.945 0.018 78;
+    --sidebar-foreground: 0.24 0.028 48;
+    --sidebar-primary: 0.63 0.155 33;
+    --sidebar-primary-foreground: 0.99 0.008 60;
+    --sidebar-accent: 0.91 0.028 72;
+    --sidebar-accent-foreground: 0.28 0.03 50;
+    --sidebar-border: 0.87 0.024 76;
+    --sidebar-ring: 0.63 0.155 33;
+
+    /* Message bubbles */
+    --bubble-in: 0.955 0.012 80;
+    --bubble-in-foreground: 0.24 0.028 48;
+    --bubble-out: 0.63 0.155 33;
+    --bubble-out-foreground: 0.99 0.008 60;
+
+    /* Gradients & motion */
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.66 0.16 38),
+      oklch(0.6 0.15 28)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.975 0.012 80),
+      oklch(0.955 0.016 76)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Warm charcoal, not cold grey */
+    --background: 0.165 0.014 48;
+    --foreground: 0.93 0.012 65;
+    --card: 0.205 0.016 48;
+    --card-foreground: 0.93 0.012 65;
+    --popover: 0.235 0.018 48;
+    --popover-foreground: 0.93 0.012 65;
+
+    /* Ember glows warmer in the dark */
+    --primary: 0.7 0.16 38;
+    --primary-foreground: 0.17 0.02 40;
+
+    --secondary: 0.25 0.018 48;
+    --secondary-foreground: 0.86 0.012 65;
+    --muted: 0.25 0.018 48;
+    --muted-foreground: 0.62 0.016 58;
+
+    --accent: 0.68 0.12 168;
+    --accent-foreground: 0.16 0.02 168;
+
+    --destructive: 0.62 0.19 25;
+    --destructive-foreground: 0.16 0.015 25;
+
+    --success: 0.68 0.13 158;
+    --warning: 0.78 0.14 82;
+
+    --border: 0.3 0.018 48;
+    --input: 0.3 0.018 48;
+    --ring: 0.7 0.16 38;
+
+    --chart-1: 0.7 0.16 38;
+    --chart-2: 0.68 0.12 168;
+    --chart-3: 0.66 0.1 250;
+    --chart-4: 0.78 0.14 82;
+    --chart-5: 0.68 0.14 320;
+
+    --sidebar: 0.185 0.015 48;
+    --sidebar-foreground: 0.92 0.012 65;
+    --sidebar-primary: 0.7 0.16 38;
+    --sidebar-primary-foreground: 0.17 0.02 40;
+    --sidebar-accent: 0.25 0.02 48;
+    --sidebar-accent-foreground: 0.88 0.012 65;
+    --sidebar-border: 0.29 0.018 48;
+    --sidebar-ring: 0.7 0.16 38;
+
+    --bubble-in: 0.235 0.018 48;
+    --bubble-in-foreground: 0.9 0.012 65;
+    --bubble-out: 0.7 0.16 38;
+    --bubble-out-foreground: 0.17 0.02 40;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.72 0.16 40),
+      oklch(0.66 0.16 30)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.185 0.015 48),
+      oklch(0.16 0.014 48)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  ::selection {
+    background-color: oklch(var(--primary) / 0.22);
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .text-gradient-primary {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shadow-bubble-in {
+    box-shadow: 0 1px 2px oklch(0.22 0.03 45 / 0.07), 0 2px 8px
+      oklch(0.22 0.03 45 / 0.05);
+  }
+  .shadow-bubble-out {
+    box-shadow: 0 2px 6px oklch(0.55 0.14 33 / 0.28), 0 6px 18px
+      oklch(0.55 0.14 33 / 0.16);
+  }
+  .scrollbar-soft {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--border)) transparent;
+  }
+  .scrollbar-soft::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-soft::-webkit-scrollbar-thumb {
+    background-color: oklch(var(--border));
+    border-radius: 9999px;
+  }
+  .scrollbar-soft::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
